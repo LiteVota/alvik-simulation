@@ -1,0 +1,21 @@
+# Python runtime artifacts
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Webots backups; .wbproj files are intentional editor presets.
+*.wbt.bak
+*.wbproj.bak
+*.wbt~
+*.wbproj~
+*.tmp
+*.log
+*.zip
