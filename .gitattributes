@@ -1,0 +1,9 @@
+* text=auto
+*.py text eol=lf
+*.md text eol=lf
+*.wbt text eol=lf
+*.wbproj text eol=lf
+*.proto text eol=lf
+*.ini text eol=lf
+*.obj text eol=lf
+*.png binary
