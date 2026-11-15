@@ -50,6 +50,8 @@ The examples use Python's standard library and Webots' bundled controller librar
 
 ## Quick start
 
+All file paths below are relative to the extracted repository folder.
+
 1. Download the repository with **Code > Download ZIP**, then extract it. Keep the folder structure intact.
 2. Open `worlds/black_line.wbt` in Webots.
 3. Start the simulation if it is paused. Click the 3D view to give it keyboard focus.
@@ -63,13 +65,13 @@ If the controller does not start, set **Tools > Preferences > General > Python c
 
 ## Create a map
 
-Start with [Blank Template](worlds/blank_template.wbt) to create your own world:
+Start with the [Blank Template world](worlds/blank_template.wbt) in the repository's `worlds/` folder. Open `worlds/blank_template.wbt` in Webots to load the arena and open `robot_code/blank_template.py` in the Text Editor.
 
 1. Open `worlds/textures/blank_template.png` in Paint or another image editor. Draw lines, colour patches, or other floor markings. Keep the image dimensions.
 2. Save the PNG and reload the world in Webots to see your painted floor. Write your robot behavior in `robot_code/blank_template.py` and save to run it.
 3. To keep a separate project example, use **Save As** for a new PNG such as `my_course.png`, then copy the template world and Python starter under the same name. Point the copied world at those files. The [custom-world guide](docs/usage.md#create-a-custom-track) gives the exact names and settings.
 
-The template opens its Python starter in Webots' Text Editor. Drag spare props from the side, or press **1–4** for an empty floor, boundaries, a centre obstacle, or a maze.
+PNG edits change the floor markings. For solid obstacles, drag spare 3D props from the side. Press **1–4** in the 3D view for an empty floor, boundaries, a centre obstacle, or a maze.
 
 Worlds, programs, and floor textures share the same name: for example, `worlds/black_line.wbt`, `robot_code/black_line.py`, and `worlds/textures/black_line.png`. Each example has its own texture, so editing one does not alter another.
 
@@ -126,7 +128,7 @@ Autonomous examples begin when the simulation runs and sensor data is ready. Rou
 
 Open `.wbt` files to run worlds. The adjacent `.<name>.wbproj` files preserve Webots editor layouts and open the matching Python program; keep them with their worlds. The [world catalog](worlds/README.md) describes each scene and its supporting files.
 
-To run your own program, add a `.py` file under `robot_code/` and set the Alvik node's first `controllerArgs` entry to that filename. Keep `controller` set to `arduino_alvik`. The [user guide](docs/usage.md#run-your-own-named-python-file) includes an example and instructions for editing tracks and playground props.
+To run your own program, add a `.py` file under `robot_code/`, select the Alvik node in Webots' Scene Tree, and set its first `controllerArgs` entry to that filename. Keep `controller` set to `arduino_alvik`. The [user guide](docs/usage.md#run-your-own-named-python-file) includes an example and instructions for editing tracks and playground props.
 
 Keep a short `sleep_ms` or `sleep` in polling loops so Webots can advance physics and refresh its sensors. Use the physical robot's official library when transferring the same program to Alvik. Sensor thresholds, calibration, and motion settings still need checking on the real robot.
 
