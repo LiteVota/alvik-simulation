@@ -1,0 +1,125 @@
+#VRML_SIM R2025a utf8
+EXTERNPROTO "../protos/Alvik.proto"
+WorldInfo { title "Alvik | Maze Escape" basicTimeStep 20 randomSeed 42
+ contactProperties [
+  ContactProperties { material1 "alvik tyre" material2 "default" coulombFriction [ 1 ] bumpSound "" rollSound "" slideSound "" }
+  ContactProperties { material1 "alvik caster" material2 "default" coulombFriction [ 0.001 ] bumpSound "" rollSound "" slideSound "" }
+ ]
+}
+DEF TOF_VIEWPOINT Viewpoint { orientation -0.577350269 0.577350269 0.577350269 2.094395102 position 0 .15 3.8 }
+Background { skyColor [ .90 .93 .96 ] }
+DirectionalLight { direction -1 -1 -2 intensity 1 ambientIntensity .5 }
+Solid { name "floor" locked TRUE children [ Shape {
+ appearance Appearance { texture ImageTexture { url [ "textures/maze_escape.png" ] filtering 0 } }
+ geometry IndexedFaceSet { coord Coordinate { point [ -1.4 -1.4 0, 1.4 -1.4 0, -1.4 1.4 0, 1.4 1.4 0 ] }
+ texCoord TextureCoordinate { point [ 0 0, 1 0, 0 1, 1 1 ] } coordIndex [ 2 0 1 3 -1 ] texCoordIndex [ 2 0 1 3 -1 ] }
+ } ] boundingObject Plane { size 2.8 2.8 }
+}
+
+
+# A 4 x 4 cell maze with 40 cm spacing, one exit, and no loops.
+DEF MAZE_WALL_0 Solid {
+  translation -0.800000 0.000000 0.080000
+  name "Maze wall 0"
+  locked TRUE
+  children [ Shape {
+    appearance PBRAppearance { baseColor .38 .44 .52 roughness 1 metalness 0 }
+    geometry DEF MAZE_SHAPE_0 Box { size 0.025000 1.625000 0.160000 }
+  } ]
+  boundingObject USE MAZE_SHAPE_0
+}
+DEF MAZE_WALL_1 Solid {
+  translation -0.400000 0.200000 0.080000
+  name "Maze wall 1"
+  locked TRUE
+  children [ Shape {
+    appearance PBRAppearance { baseColor .38 .44 .52 roughness 1 metalness 0 }
+    geometry DEF MAZE_SHAPE_1 Box { size 0.025000 0.425000 0.160000 }
+  } ]
+  boundingObject USE MAZE_SHAPE_1
+}
+DEF MAZE_WALL_2 Solid {
+  translation 0.000000 -0.200000 0.080000
+  name "Maze wall 2"
+  locked TRUE
+  children [ Shape {
+    appearance PBRAppearance { baseColor .38 .44 .52 roughness 1 metalness 0 }
+    geometry DEF MAZE_SHAPE_2 Box { size 0.025000 0.425000 0.160000 }
+  } ]
+  boundingObject USE MAZE_SHAPE_2
+}
+DEF MAZE_WALL_3 Solid {
+  translation 0.400000 -0.600000 0.080000
+  name "Maze wall 3"
+  locked TRUE
+  children [ Shape {
+    appearance PBRAppearance { baseColor .38 .44 .52 roughness 1 metalness 0 }
+    geometry DEF MAZE_SHAPE_3 Box { size 0.025000 0.425000 0.160000 }
+  } ]
+  boundingObject USE MAZE_SHAPE_3
+}
+DEF MAZE_WALL_4 Solid {
+  translation 0.800000 0.000000 0.080000
+  name "Maze wall 4"
+  locked TRUE
+  children [ Shape {
+    appearance PBRAppearance { baseColor .38 .44 .52 roughness 1 metalness 0 }
+    geometry DEF MAZE_SHAPE_4 Box { size 0.025000 1.625000 0.160000 }
+  } ]
+  boundingObject USE MAZE_SHAPE_4
+}
+DEF MAZE_WALL_5 Solid {
+  translation 0.000000 -0.800000 0.080000
+  name "Maze wall 5"
+  locked TRUE
+  children [ Shape {
+    appearance PBRAppearance { baseColor .38 .44 .52 roughness 1 metalness 0 }
+    geometry DEF MAZE_SHAPE_5 Box { size 1.625000 0.025000 0.160000 }
+  } ]
+  boundingObject USE MAZE_SHAPE_5
+}
+DEF MAZE_WALL_6 Solid {
+  translation -0.400000 -0.400000 0.080000
+  name "Maze wall 6"
+  locked TRUE
+  children [ Shape {
+    appearance PBRAppearance { baseColor .38 .44 .52 roughness 1 metalness 0 }
+    geometry DEF MAZE_SHAPE_6 Box { size 0.825000 0.025000 0.160000 }
+  } ]
+  boundingObject USE MAZE_SHAPE_6
+}
+DEF MAZE_WALL_7 Solid {
+  translation 0.000000 0.000000 0.080000
+  name "Maze wall 7"
+  locked TRUE
+  children [ Shape {
+    appearance PBRAppearance { baseColor .38 .44 .52 roughness 1 metalness 0 }
+    geometry DEF MAZE_SHAPE_7 Box { size 0.825000 0.025000 0.160000 }
+  } ]
+  boundingObject USE MAZE_SHAPE_7
+}
+DEF MAZE_WALL_8 Solid {
+  translation 0.400000 0.400000 0.080000
+  name "Maze wall 8"
+  locked TRUE
+  children [ Shape {
+    appearance PBRAppearance { baseColor .38 .44 .52 roughness 1 metalness 0 }
+    geometry DEF MAZE_SHAPE_8 Box { size 0.825000 0.025000 0.160000 }
+  } ]
+  boundingObject USE MAZE_SHAPE_8
+}
+DEF MAZE_WALL_9 Solid {
+  translation -0.200000 0.800000 0.080000
+  name "Maze wall 9"
+  locked TRUE
+  children [ Shape {
+    appearance PBRAppearance { baseColor .38 .44 .52 roughness 1 metalness 0 }
+    geometry DEF MAZE_SHAPE_9 Box { size 1.225000 0.025000 0.160000 }
+  } ]
+  boundingObject USE MAZE_SHAPE_9
+}
+
+DEF ALVIK Alvik { supervisor TRUE
+  translation -.6 -.6 .001
+  controllerArgs [ "maze_escape.py" "--status" ]
+}
