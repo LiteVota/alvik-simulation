@@ -57,7 +57,7 @@ All file paths below are relative to the extracted repository folder.
 3. Start the simulation if it is paused. Click the 3D view to give it keyboard focus.
 4. Press **X** to pause or resume the robot; **C** stops it. Use **Reload World** for a fresh run.
 
-If the controller does not start, set **Tools > Preferences > General > Python command** to your Python executable. For manual driving and editable obstacles, open `worlds/playground.wbt`.
+If the controller does not start or Webots crashes, set **Tools > Preferences > General > Python command** to your Python executable. For manual driving and editable obstacles, open `worlds/playground.wbt`.
 
 ## Create a map
 
