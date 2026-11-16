@@ -12,6 +12,12 @@ Develop and explore Alvik programs in software, then carry the robot logic over 
 
 The current adapter covers a subset of the API. Full compatibility with every Alvik program is still a development goal; unsupported APIs and MicroPython-specific dependencies require additional implementation.
 
+## Academic background
+
+This project was developed as part of the Bachelor’s degree program [Robotik und Automatisierung](https://www.w-hs.de/bachelor/bachelor-robotik-und-automatisierung/) at [Westfälische Hochschule](https://www.w-hs.de/).
+
+Special thanks to Prof. Olaf Just for his support. Visit his [GitHub profile](https://github.com/ProfJust) for related projects and teaching materials.
+
 ## How the Alvik bridge works
 
 On a physical robot, `from arduino_alvik import ArduinoAlvik` loads Arduino's MicroPython library. In this project, the bridge supplies that module inside Webots' Python controller process. It translates API calls into Webots device operations: wheel speeds become motor commands, sensor methods read simulated devices, and timing calls advance simulation time.
