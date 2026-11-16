@@ -85,7 +85,7 @@ The included programs demonstrate capabilities such as:
 | [Sensor Motion](worlds/sensor_motion.wbt) | Experiment with LEDs, distance sensing, wheel odometry, and obstacle detours. |
 | [Line Recovery](worlds/line_recovery.wbt) | Compare steering gains and recover the track after a short gap. |
 
-These examples and more are included in [robot_code/](robot_code/README.md). Each example prints its description and controls when it starts. See the [world catalog](worlds/README.md) for all 11 scenes and the [user guide](docs/usage.md) for operating instructions.
+These examples and more are included in [robot_code/](robot_code/README.md). Each example prints its description and controls when it starts. See the [world catalog](worlds/README.md) for all scenes and the [user guide](docs/usage.md) for operating instructions.
 
 ### Maze Escape in Webots
 
