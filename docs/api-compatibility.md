@@ -6,12 +6,13 @@ This reference compares the local adapter with the public `ArduinoAlvik` class i
 
 Robot behavior should use public Alvik methods and ordinary Python. The supplied `robot_code/` programs do not import Webots or call scene-reset, ground-truth, or display functions. Webots-specific tools stay in `controllers/`; on hardware, Arduino's own library supplies `ArduinoAlvik`.
 
-Compatibility applies to the implemented methods, options, return shapes, and Python dependencies below. It does not mean that every existing Alvik program works unchanged. Check its imports and API calls first. Add a short `sleep_ms` or `sleep` in polling loops; the adapter advances physics and sensors during these calls rather than running a MicroPython background update thread.
+Compatibility applies to the implemented methods, options, return shapes, and Python dependencies below. It does not mean that every existing Alvik program works unchanged. Check its imports and API calls first. Create one `ArduinoAlvik()` instance and call `begin()` before using sensors or simulation timing. Add a short `sleep_ms` or `sleep` in polling loops; the adapter advances physics and sensors during these calls rather than running a MicroPython background update thread.
 
 ## Important limits
 
 - `move` and `rotate` support blocking operation. `blocking=False` raises `NotImplementedError`; asynchronous target tracking and `is_target_reached` are not implemented. The blocking wrappers return `None`, matching the public library. Keyboard cancellation and motion timeouts stop simulated motors.
-- Wheel and drive commands saturate at the simulated motor limits. Supported distance units are `m`, `cm`, `mm`, `inch`, and `in`; angle units are `rad`, `deg`, `rev`, and `revolution`; wheel/angular speed units are `rad/s`, `deg/s`, `rpm`, and `rev/s`. Linear speed uses a distance unit followed by `/s`. The drive percentage option `%` is not implemented.
+- Wheel and drive commands saturate at the simulated motor limits. Supported distance units are `m`, `cm`, `mm`, `inch`, and `in`; angle units are `rad`, `deg`, `rev`, and `revolution`; wheel/angular speed units are `rad/s`, `deg/s`, `rpm`, and `rev/s`. Linear speed uses a distance unit followed by `/s`. Percentage (`%`) wheel-speed and angular-drive commands are not implemented.
+- `stop()` brakes the motors, leaving the simulation, LEDs, and input handling active. Arduino's library also turns off the LEDs and stops its background threads. Use `brake()` when the intent is to halt motion and continue the program.
 - `get_accelerations()` returns a three-value tuple in g; `get_gyros()` returns a three-value tuple in degrees per second; `get_imu()` returns `(ax, ay, az, gx, gy, gz)`. The fused orientation and gesture APIs are not implemented.
 - `get_color('rgb')` returns normalized channels; HSV hue is in degrees, with saturation/value in 0..1. `hsv2label` follows the reviewed Arduino classifier, including labels such as `LIGHT BLUE` and `LIGHT GREY`. The route programs define their own tape classifiers from public colour readings to distinguish their route names.
 - `color_calibration` stores rendered black/white reference samples. Its sampling, illumination, and normalization are approximations of the hardware procedure. Raw hardware colour counts and illuminator control are not implemented.
@@ -100,12 +101,10 @@ The following implemented calls are available but are not called by the supplied
 | `set_servo_positions` | Not implemented | No |
 | `set_timer` | Not implemented | No |
 | `set_wheels_position` | Not implemented | No |
-| `set_wheels_speed` | Implemented | Yes |
-| `stop` | Implemented | Yes |
+| `set_wheels_speed` | Limited | Yes |
+| `stop` | Limited | Yes |
 | `timer` | Not implemented | No |
 
 ## Verification status
 
-The compatibility checks exercise public return shapes, colour conversion/labels, LED channel semantics, unsupported nonblocking motion, and example startup against an API-only test double. Project checks verify Python syntax, world resources, editor presets, and documentation links. These checks do not replace physics tests or comparison with a physical Alvik. Live verification of this revision is pending because the installed Webots runtime currently fails to launch with a missing DLL dependency.
-
-Run the checks from the repository root with `python -m unittest discover -s tests -v`. They use only the Python standard library and do not launch Webots.
+The table records source-level coverage against the pinned Arduino library and calls made by the supplied examples. It does not establish motion accuracy, sensor calibration, or timing equivalence. Validate those properties in Webots and on a physical Alvik for the intended task.
