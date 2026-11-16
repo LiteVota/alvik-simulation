@@ -4,9 +4,9 @@
 
 Use the familiar Alvik MicroPython API to test robot behavior in simulation without a physical robot. The Alvik bridge connects supported API calls to simulated motors and sensors, so compatible programs can keep the same robot logic.
 
-![Simulated Alvik among obstacles with its forward sensor guide](docs/images/alvik_sensors.png)
+![Simulated Alvik among obstacles with its forward sensor guide](docs/images/alvik_image.png)
 
-## Purpose and scope
+## Project purpose
 
 Develop and explore Alvik programs in software, then carry the robot logic over to a physical Alvik using Arduino's library. The examples use public Alvik methods for driving, sensing, LEDs, and touch input. Scene placement, visual overlays, and repeatable world resets are handled by Webots tools outside those robot algorithms.
 
@@ -57,10 +57,6 @@ All file paths below are relative to the extracted repository folder.
 3. Start the simulation if it is paused. Click the 3D view to give it keyboard focus.
 4. Press **X** to pause or resume the robot; **C** stops it. Use **Reload World** for a fresh run.
 
-Press **V** in any world to show or hide the sensor array and live distance readings. They start hidden. No controller flag or extra world object is needed.
-
-A small on-screen hint shows **V: show/hide sensor array | X: OK | C: Cancel** in every world. Each program defines what its OK and Cancel inputs do.
-
 If the controller does not start, set **Tools > Preferences > General > Python command** to your Python executable. For manual driving and editable obstacles, open `worlds/playground.wbt`.
 
 ## Create a map
@@ -89,7 +85,7 @@ The included programs demonstrate capabilities such as:
 | [Sensor Motion](worlds/sensor_motion.wbt) | Experiment with LEDs, distance sensing, wheel odometry, and obstacle detours. |
 | [Line Recovery](worlds/line_recovery.wbt) | Compare steering gains and recover the track after a short gap. |
 
-Each program prints a short description of its behavior and its controls when it starts. The [user guide](docs/usage.md) contains the full world catalog and operating instructions.
+These examples and more are included in [robot_code/](robot_code/README.md). Each example prints its description and controls when it starts. See the [world catalog](worlds/README.md) for all 11 scenes and the [user guide](docs/usage.md) for operating instructions.
 
 ### Maze Escape in Webots
 
@@ -109,38 +105,23 @@ Maze Escape with live program status alongside its Python code.
 | **J / K** | Move the target nearer or farther in the Hand Follower world. |
 | **U** | Rerun the active Python program in Playground or Blank Template. Saving also reloads it. |
 
-Autonomous examples begin when the simulation runs and sensor data is ready. Route selection and configurable experiments wait for input. See the [user guide](docs/usage.md) for each world's exact controls.
+Autonomous examples begin when the simulation runs and sensor data is ready. Route selection and motion experiments wait for input. See the [user guide](docs/usage.md) for each world's exact controls.
 
 ## Project structure
 
-| Folder or file | Purpose |
+| Folder | Purpose |
 | --- | --- |
-| [controllers/arduino_alvik/](controllers/arduino_alvik/README.md) | Shared Python API bridge, visual displays, and scene tools. |
+| [controllers/](controllers/arduino_alvik/README.md) | Shared Python API bridge, visual displays, and scene tools. |
 | [robot_code/](robot_code/README.md) | Standalone Alvik example programs with a brief catalog. |
 | [protos/](protos/README.md) | Robot model, simulated devices, and visual meshes. |
 | [worlds/](worlds/README.md) | Example scenes, floor textures, and Webots editor settings. |
 | [docs/](docs/README.md) | Setup, controls, custom maps, API coverage, and model notes. |
-| [LICENSES/](LICENSES/README.md) | License references for software and model assets. |
-| [.gitignore](.gitignore) | Excludes local caches, backups, and editor artifacts from version control. |
-| [.gitattributes](.gitattributes) | Sets text line endings and marks PNG images as binary. |
-| [LICENSE](LICENSE) | Standard Mozilla Public License 2.0 terms for the software. |
-| [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) | Upstream sources, retained notices, and adaptation details. |
 
-Open `.wbt` files to run worlds. The adjacent `.<name>.wbproj` files preserve Webots editor layouts and open the matching Python program; keep them with their worlds. The [world catalog](worlds/README.md) describes each scene and its supporting files.
-
-To run your own program, add a `.py` file under `robot_code/`, select the Alvik node in Webots' Scene Tree, and set its first `controllerArgs` entry to that filename. Keep `controller` set to `arduino_alvik`. The [user guide](docs/usage.md#run-your-own-named-python-file) includes an example and instructions for editing tracks and playground props.
-
-Keep a short `sleep_ms` or `sleep` in polling loops so Webots can advance physics and refresh its sensors. Use the physical robot's official library when transferring the same program to Alvik. Sensor thresholds, calibration, and motion settings still need checking on the real robot.
-
-All controller-side Python lives in `controllers/arduino_alvik/arduino_alvik.py`, including keyboard shortcuts, scene presets, displays, and code reload. Its opening comments explain the code sections and every controller argument. Files under `robot_code/` contain the individual Alvik programs. See the [controller argument reference](docs/usage.md#controller-arguments) for the available scene tools.
-
-The supported feature flags `--beams`, `--status`, `--hand-target`, and `--lab` can be combined with any robot program. The bridge creates missing guides and requested target or exercise objects. `--beams` remains accepted for compatibility; **V** works without it. Standalone scene-helper modes are handled separately by the supplied editable worlds.
-
-## Simulation scope
+## Model and limitations
 
 The model represents differential drive, wheel encoders, three line sensors, one downward RGB sensor, one front depth sensor, an accelerometer and gyroscope, two RGB LEDs, and keyboard touch controls. The adapter uses simulation time and converts Alvik-style commands to Webots device calls.
 
-The front sensor renders a 4 x 4 depth matrix and groups it into the Alvik firmware's five horizontal and three vertical outputs, sharing the centre reading. Optical response, friction, mechanical dimensions, and timing include approximations. The simulation has not been calibrated against a physical Alvik. See [model and API details](docs/usage.md#how-the-bridge-works).
+The front sensor renders a 4 × 4 depth matrix and groups it into the Alvik firmware's five horizontal and three vertical outputs, sharing the centre reading. Optical response, friction, mechanical dimensions, and timing include approximations. The simulation has not been calibrated against a physical Alvik. See the [hardware-model notes](docs/usage.md#hardware-model) for details.
 
 Wheel motors use Webots' standard rotational-motor sound, with pitch and volume following their speed. Adjust or mute it with Webots' own audio control. This is a simulation cue, not a recording of the physical Alvik.
 
